@@ -5,8 +5,9 @@ import * as bootstrap from "bootstrap";
 
 document.addEventListener("turbo:load", function () {
     setTimeout(function () {
-        const alerts = document.querySelectorAll('.alert');
-        alerts.forEach(alert => {
+        // Select all success alerts
+        const successAlerts = document.querySelectorAll('.alert.alert-success');
+        successAlerts.forEach(alert => {
             const bootstrapAlert = bootstrap.Alert.getInstance(alert);
             if (bootstrapAlert) {
                 bootstrapAlert.close();
@@ -15,7 +16,7 @@ document.addEventListener("turbo:load", function () {
                 alert.classList.add('fade');
             }
         });
-    }, 5000);
+    }, 5000); // Adjust duration as needed
 });
 
 document.addEventListener("DOMContentLoaded", function () {

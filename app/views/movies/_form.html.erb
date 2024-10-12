@@ -8,12 +8,22 @@
         </div>
         <div class="card-body auto">
           <%= form_with model: @movie, local: true do |form| %>
-            <% if @movie.errors.any? %>
+
+            <% if flash[:success] %>
+              <div class="alert alert-success">
+                <%= flash[:success] %>
+              </div>
+            <% end %>
+
+            <% if flash[:error] || @movie.errors.any? %>
               <div class="alert alert-danger">
                 <h4 class="alert-heading">There were some errors with your submission:</h4>
                 <ul>
                   <% @movie.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
+                  <% end %>
+                  <% if flash[:error] %>
+                    <li><%= flash[:error] %></li>
                   <% end %>
                 </ul>
               </div>

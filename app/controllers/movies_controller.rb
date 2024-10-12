@@ -12,10 +12,10 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.new(movie_params)
     if @movie.save
-      flash[:notice] = 'Movie created successfully'
+      flash[:success] = 'Movie created successfully' # Success message
       redirect_to movies_path
     else
-      flash.now[:alert] = 'Movie creation failed'
+      flash.now[:error] = 'There were errors with your submission.' # Validation errors
       render :new, status: :unprocessable_entity
     end
   end
@@ -26,17 +26,17 @@ class MoviesController < ApplicationController
 
   def update
     if @movie.update(movie_params)
-      flash[:notice] = 'Movie updated successfully'
+      flash[:success] = 'Movie updated successfully' # Success message
       redirect_to movies_path
     else
-      flash.now[:alert] = 'Movie update failed'
+      flash.now[:error] = 'There were errors with your submission.' # Validation errors
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @movie.destroy
-    flash[:notice] = 'Movie destroyed successfully'
+    flash[:success] = 'Movie destroyed successfully' # Success message
     redirect_to movies_path
   end
 
