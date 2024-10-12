@@ -1,0 +1,18 @@
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="card" style="max-width: 600px; width: 100%; background-color: #f8f9fa;">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Movie Information</h2>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><strong>Title:</strong> <%= @movie.title || '-' %></p>
+      <p class="card-text"><strong>Description:</strong> <%= @movie.description || '-' %></p>
+      <p class="card-text"><strong>Date Released:</strong> <%= @movie.date_released.present? ? @movie.date_released.strftime('%B %d, %Y') : '-' %></p>
+      <p class="card-text"><strong>Country of Origin:</strong> <%= @movie.country_of_origin || '-' %></p>
+      <p class="card-text"><strong>Showing Start:</strong> <%= @movie.showing_start.present? ? @movie.showing_start.strftime('%B %d, %Y %I:%M %p') : '-' %></p>
+      <p class="card-text"><strong>Showing End:</strong> <%= @movie.showing_end.present? ? @movie.showing_end.strftime('%B %d, %Y %I:%M %p') : '-' %></p>
+    </div>
+    <div class="card-footer text-end">
+      <%= link_to 'Back to Movies', movies_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>

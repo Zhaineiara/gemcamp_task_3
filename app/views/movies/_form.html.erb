@@ -1,0 +1,85 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card rounded-top">
+        <button type="button" class="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" onclick="window.location='<%= movies_path %>'"></button>
+        <div class="card-header bg-primary text-white rounded-top">
+          <h3 class="mb-0"><%= @movie.new_record? ? "Create New Movie" : "Update Movie" %></h3>
+        </div>
+        <div class="card-body auto">
+          <%= form_with model: @movie, local: true do |form| %>
+            <% if @movie.errors.any? %>
+              <div class="alert alert-danger">
+                <h4 class="alert-heading">There were some errors with your submission:</h4>
+                <ul>
+                  <% @movie.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="mb-3">
+              <%= form.label :title, class: "form-label" %>
+              <%= form.text_field :title, class: "form-control", placeholder: "Enter movie title" %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :description, class: "form-label" %>
+              <%= form.text_area :description, class: "form-control", placeholder: "Enter movie description", rows: 4 %>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= form.label :country_of_origin, class: "form-label" %>
+                <%= form.text_field :country_of_origin, class: "form-control", placeholder: "Enter country of origin" %>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <%= form.label :date_released, class: "form-label" %>
+                <div class="input-group">
+                  <%= form.date_select :date_released,
+                                       { start_year: Date.today.year - 50,
+                                         end_year: Date.today.year + 10,
+                                         include_blank: true },
+                                       class: "form-control" %>
+                  <span class="input-group-text">YYYY/MM/DD</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <%= form.label :showing_start, class: "form-label" %>
+                <div class="input-group">
+                  <%= form.date_select :showing_start,
+                                       { start_year: Date.today.year,
+                                         end_year: Date.today.year + 10,
+                                         include_blank: true },
+                                       class: "form-control" %>
+                  <span class="input-group-text">YYYY/MM/DD</span>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <%= form.label :showing_end, class: "form-label" %>
+                <div class="input-group">
+                  <%= form.date_select :showing_end,
+                                       { start_year: Date.today.year,
+                                         end_year: Date.today.year + 10,
+                                         include_blank: true },
+                                       class: "form-control" %>
+                  <span class="input-group-text">YYYY/MM/DD</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <%= form.submit @movie.new_record? ? "Create Movie" : "Update Movie", class: "btn btn-success btn-lg" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
