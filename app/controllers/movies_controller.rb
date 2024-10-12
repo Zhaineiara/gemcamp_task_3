@@ -1,8 +1,8 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  before_action :find_movie, only: [:show, :edit, :update, :destroy]
 
   def index
-    @movies = Movie.all
+    @movies = Movie.all.order('title ASC')
   end
 
   def new
@@ -42,7 +42,7 @@ class MoviesController < ApplicationController
 
   private
 
-  def set_movie
+  def find_movie
     @movie = Movie.find(params[:id])
   end
 

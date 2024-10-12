@@ -1,16 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>App</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>App</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body>
+
+<nav class="navbar sticky-top navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid">
+    <%= link_to "MOVIE REVIEW", root_path, class: "navbar-brand" %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li><%= link_to "Sign Up", new_user_registration_path, class: "nav-link #{current_page?(new_user_registration_path) ? 'active' : ''}" %></li>
+        <% if user_signed_in? %>
+          <li><%= button_to 'Sign Out', destroy_user_session_path,class: "nav-link", method: :delete %></li>
+      <% else %>
+          <li><%= link_to "Sign In", new_user_session_path, class: "nav-link #{current_page?(new_user_session_path) ? 'active' : ''}" %></li>
+        <% end %>
+      </ul>
+
+      <!-- Search Form -->
+      <form class="d-flex me-2 mb-2 mb-lg-0" role="search">
+        <div class="input-group">
+          <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success btn-sm" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<%= yield %>
+
+</body>
 </html>
