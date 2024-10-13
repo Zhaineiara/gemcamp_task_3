@@ -6,7 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-#Genre.destroy_all
+User.destroy_all
+Genre.destroy_all
+Movie.destroy_all
 
 genres = [
   { name: 'Action' },
@@ -44,6 +46,8 @@ end
   )
 end
 
+puts "Created #{User.count} users."
+
 10.times do
   Movie.create(
     title: Faker::Movie.title,
@@ -51,6 +55,10 @@ end
     date_released: Faker::Date.between(from: '1900-01-01', to: Date.today),
     country_of_origin: Faker::Address.country,
     showing_start: Faker::Time.forward(days: rand(1..10), period: :evening),
-    showing_end: Faker::Time.forward(days: rand(11..20), period: :evening)
+    showing_end: Faker::Time.forward(days: rand(11..20), period: :evening),
+    user: User.all.sample # Assign a random user to each movie
   )
 end
+
+movie.genres << Genre.order('RANDOM()').limit(rand(1..3))
+puts "Created #{Movie.count} movies with associated genres."

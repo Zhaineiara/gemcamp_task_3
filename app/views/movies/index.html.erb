@@ -19,8 +19,8 @@
       <% @movies.each_with_index do |movie, index| %>
         <tr>
           <td class="text-center"><%= index + 1 %></td>
-          <td class="text-center"><%= link_to movie.title, movie_path(movie) %></td>
-          <td class="text-center"><%= movie.description %></td>
+          <td class="text-left"><%= link_to movie.title, movie_path(movie) %></td>
+          <td class="text-left"><%= movie.description %></td>
           <td class="text-center">
             <% if movie.genres.any? %>
               <% movie.genres.each do |genre| %>

@@ -8,6 +8,30 @@
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+
+  <style>
+      .dropdown-menu-scrollable {
+          max-height: 200px; /* Height limit for scrollable area */
+          overflow-y: auto;  /* Enables vertical scrolling */
+          overflow-x: hidden; /* Prevents horizontal scrolling */
+          padding: 0;        /* Removes padding for a compact look */
+          border: 1px solid #ced4da; /* Adds a light border */
+          border-radius: 0.25rem; /* Rounded corners */
+          background-color: #fff; /* Background color */
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Shadow for better separation */
+      }
+
+      .dropdown-item {
+          padding: 0.5rem 1rem; /* Increases clickable area */
+          color: #007bff; /* Default text color */
+          text-decoration: none; /* Remove underline from links */
+      }
+
+      .dropdown-item:hover {
+          background-color: #f8f9fa; /* Light background on hover */
+          color: #0056b3; /* Darker text color on hover */
+      }
+  </style>
 </head>
 
 <body style="margin: 0; padding: 0;">
@@ -30,12 +54,25 @@
         <% end %>
       </ul>
 
-      <ul class="d-flex me-3 mb-2 mb-lg-0">
-          <% if user_signed_in? %>
-            <%= link_to "Add Movie", new_movie_path, class: "btn btn-success" %>
-          <% end %>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu dropdown-menu-scrollable" aria-labelledby="categoriesDropdown">
+              <% Genre.all.order(:name).each do |genre| %>
+                <li><%= link_to genre.name, movies_path(genre), class: "dropdown-item" %></li>
+              <% end %>
+            </ul>
+          </div>
       </ul>
-      <!-- Search Form -->
+
+      <ul class="d-flex me-3 mb-2 mb-lg-0">
+        <% if user_signed_in? %>
+          <%= link_to "Add Movie", new_movie_path, class: "btn btn-success" %>
+        <% end %>
+      </ul>
+
       <form class="d-flex me-2 mb-2 mb-lg-0" role="search">
         <div class="input-group">
           <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
