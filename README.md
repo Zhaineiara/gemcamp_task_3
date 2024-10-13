@@ -14,3 +14,25 @@ Movie.create(title: "Inception", description: "A thief who steals corporate secr
 Movie.create(title: "Fight Club", description: "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.", date_released: Date.new(1999, 10, 15), country_of_origin: "United States", showing_start: DateTime.new(2024, 11, 10), showing_end: DateTime.new(2024, 11, 25))
 Movie.create(title: "The Matrix", description: "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.", date_released: Date.new(1999, 3, 31), country_of_origin: "United States", showing_start: DateTime.new(2024, 11, 15), showing_end: DateTime.new(2024, 11, 30))
 ```
+
+* Create genre records
+
+```ruby =
+genres = Genre.create([
+  { name: 'Action' },
+  { name: 'Comedy' },
+  { name: 'Drama' },
+  { name: 'Horror' },
+  { name: 'Thriller' },
+  { name: 'Science Fiction' },
+  { name: 'Romance' },
+  { name: 'Adventure' },
+  { name: 'Fantasy' },
+  { name: 'Mystery' },
+  { name: 'Documentary' },
+  { name: 'Animation' },
+  { name: 'Musical' },
+  { name: 'Western' },
+  { name: 'Historical' }
+])
+```

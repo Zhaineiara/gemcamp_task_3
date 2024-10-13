@@ -1,24 +1,31 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card rounded-top">
-        <button type="button" class="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" onclick="window.location='<%= movies_path %>'"></button>
-        <div class="card-header bg-primary text-white rounded-top">
+    <div class="col-lg-8">
+      <div class="card rounded-top shadow">
+        <!-- Close Button -->
+        <button type="button" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close" onclick="window.location='<%= movies_path %>'"></button>
+
+        <!-- Card Header -->
+        <div class="card-header bg-primary text-white">
           <h3 class="mb-0"><%= @movie.new_record? ? "Create New Movie" : "Update Movie" %></h3>
         </div>
-        <div class="card-body auto">
+
+        <!-- Card Body -->
+        <div class="card-body">
           <%= form_with model: @movie, local: true do |form| %>
 
+            <!-- Flash Messages -->
             <% if flash[:success] %>
-              <div class="alert alert-success">
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <%= flash[:success] %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             <% end %>
 
             <% if flash[:error] || @movie.errors.any? %>
-              <div class="alert alert-danger">
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <h4 class="alert-heading">There were some errors with your submission:</h4>
-                <ul>
+                <ul class="mb-0">
                   <% @movie.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
                   <% end %>
@@ -26,68 +33,96 @@
                     <li><%= flash[:error] %></li>
                   <% end %>
                 </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             <% end %>
 
+            <!-- Title Field -->
             <div class="mb-3">
               <%= form.label :title, class: "form-label" %>
               <%= form.text_field :title, class: "form-control", placeholder: "Enter movie title" %>
             </div>
 
+            <!-- Genres Selection -->
+            <div class="mb-3">
+              <%= form.label :genre_ids, "Select Genres", class: "form-label" %>
+              <%= form.collection_check_boxes :genre_ids, Genre.all, :id, :name do |b| %>
+
+                <div class="form-check">
+                  <%= b.check_box(class: "form-check-input") %>
+                  <%= b.label(class: "form-check-label") %>
+                </div>
+              <% end %>
+            </div>
+
+            <!-- Description Field -->
             <div class="mb-3">
               <%= form.label :description, class: "form-label" %>
               <%= form.text_area :description, class: "form-control", placeholder: "Enter movie description", rows: 4 %>
             </div>
 
+            <!-- Country and Date Released Fields -->
             <div class="row">
+              <!-- Country of Origin -->
               <div class="col-md-6 mb-3">
                 <%= form.label :country_of_origin, class: "form-label" %>
                 <%= form.text_field :country_of_origin, class: "form-control", placeholder: "Enter country of origin" %>
               </div>
 
+              <!-- Date Released -->
               <div class="col-md-6 mb-3">
                 <%= form.label :date_released, class: "form-label" %>
                 <div class="input-group">
                   <%= form.date_select :date_released,
                                        { start_year: Date.today.year - 50,
                                          end_year: Date.today.year + 10,
-                                         include_blank: true },
+                                         include_blank: true,
+                                         prompt: { day: 'DD', month: 'MM', year: 'YYYY' } },
                                        class: "form-control" %>
-                  <span class="input-group-text">YYYY/MM/DD</span>
                 </div>
               </div>
             </div>
 
+            <!-- Showing Start and End Fields -->
             <div class="row">
+              <!-- Showing Start -->
               <div class="col-md-6 mb-3">
                 <%= form.label :showing_start, class: "form-label" %>
                 <div class="input-group">
                   <%= form.date_select :showing_start,
                                        { start_year: Date.today.year,
                                          end_year: Date.today.year + 10,
-                                         include_blank: true },
+                                         include_blank: true,
+                                         prompt: { day: 'DD', month: 'MM', year: 'YYYY' } },
                                        class: "form-control" %>
-                  <span class="input-group-text">YYYY/MM/DD</span>
                 </div>
               </div>
 
+              <!-- Showing End -->
               <div class="col-md-6 mb-3">
                 <%= form.label :showing_end, class: "form-label" %>
                 <div class="input-group">
                   <%= form.date_select :showing_end,
                                        { start_year: Date.today.year,
                                          end_year: Date.today.year + 10,
-                                         include_blank: true },
+                                         include_blank: true,
+                                         prompt: { day: 'DD', month: 'MM', year: 'YYYY' } },
                                        class: "form-control" %>
-                  <span class="input-group-text">YYYY/MM/DD</span>
                 </div>
               </div>
             </div>
 
+            <!-- Submit Button -->
             <div class="d-grid">
               <%= form.submit @movie.new_record? ? "Create Movie" : "Update Movie", class: "btn btn-success btn-lg" %>
             </div>
+
           <% end %>
+        </div>
+
+        <!-- Card Footer (Optional) -->
+        <div class="card-footer text-end">
+          <%= link_to 'Back to Movies', movies_path, class: 'btn btn-secondary' %>
         </div>
       </div>
     </div>

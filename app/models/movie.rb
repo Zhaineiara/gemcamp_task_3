@@ -7,4 +7,5 @@ class Movie < ApplicationRecord
   validates :showing_end, presence: true, comparison: { greater_than: :showing_start }
 
   belongs_to :user
+  has_and_belongs_to_many :genres
 end
