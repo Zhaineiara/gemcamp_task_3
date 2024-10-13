@@ -34,3 +34,23 @@ genres = [
 genres.each do |genre_attributes|
   Genre.create(genre_attributes)
 end
+
+# USING FAKER
+#
+10.times do
+  User.create(
+    email: Faker::Internet.email,
+    password: Faker::Internet.password(min_length: 8)
+  )
+end
+
+10.times do
+  Movie.create(
+    title: Faker::Movie.title,
+    description: Faker::Movie.quote,
+    date_released: Faker::Date.between(from: '1900-01-01', to: Date.today),
+    country_of_origin: Faker::Address.country,
+    showing_start: Faker::Time.forward(days: rand(1..10), period: :evening),
+    showing_end: Faker::Time.forward(days: rand(11..20), period: :evening)
+  )
+end
