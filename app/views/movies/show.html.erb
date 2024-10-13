@@ -14,6 +14,10 @@
       </p>
       <p class="card-text"><strong>Showing
         End:</strong> <%= @movie.showing_end.present? ? @movie.showing_end.strftime('%B %d, %Y %I:%M %p') : '-' %></p>
+
+      <p class="card-text"><strong>Genres:</strong>
+        <%= @movie.genres.any? ? @movie.genres.map(&:name).join(', ') : '-' %>
+      </p>
     </div>
 
     <% if user_signed_in? %>

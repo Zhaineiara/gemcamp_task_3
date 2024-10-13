@@ -6,6 +6,7 @@
         <th scope="col" class="text-center">#</th>
         <th scope="col" class="text-center">Title</th>
         <th scope="col" class="text-center">Description</th>
+        <th scope="col" class="text-center">Genres</th>
         <th scope="col" class="text-center">Date Released</th>
         <th scope="col" class="text-center">Country of Origin</th>
         <th scope="col" class="text-center">Showing Start</th>
@@ -20,6 +21,15 @@
           <td class="text-center"><%= index + 1 %></td>
           <td class="text-center"><%= link_to movie.title, movie_path(movie) %></td>
           <td class="text-center"><%= movie.description %></td>
+          <td class="text-center">
+            <% if movie.genres.any? %>
+              <% movie.genres.each do |genre| %>
+                <span class="badge bg-secondary"><%= genre.name %></span>
+              <% end %>
+            <% else %>
+              -
+            <% end %>
+          </td>
           <td class="text-center"><%= movie.date_released.strftime('%B %d, %Y') if movie.date_released %></td>
           <td class="text-center"><%= movie.country_of_origin %></td>
           <td class="text-center"><%= movie.showing_start.strftime('%B %d, %Y') if movie.showing_start %></td>
