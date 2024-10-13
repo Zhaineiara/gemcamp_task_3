@@ -6,11 +6,45 @@
     <div class="card-body">
       <p class="card-text"><strong>Title:</strong> <%= @movie.title || '-' %></p>
       <p class="card-text"><strong>Description:</strong> <%= @movie.description || '-' %></p>
-      <p class="card-text"><strong>Date Released:</strong> <%= @movie.date_released.present? ? @movie.date_released.strftime('%B %d, %Y') : '-' %></p>
+      <p class="card-text"><strong>Date
+        Released:</strong> <%= @movie.date_released.present? ? @movie.date_released.strftime('%B %d, %Y') : '-' %></p>
       <p class="card-text"><strong>Country of Origin:</strong> <%= @movie.country_of_origin || '-' %></p>
-      <p class="card-text"><strong>Showing Start:</strong> <%= @movie.showing_start.present? ? @movie.showing_start.strftime('%B %d, %Y %I:%M %p') : '-' %></p>
-      <p class="card-text"><strong>Showing End:</strong> <%= @movie.showing_end.present? ? @movie.showing_end.strftime('%B %d, %Y %I:%M %p') : '-' %></p>
+      <p class="card-text"><strong>Showing
+        Start:</strong> <%= @movie.showing_start.present? ? @movie.showing_start.strftime('%B %d, %Y %I:%M %p') : '-' %>
+      </p>
+      <p class="card-text"><strong>Showing
+        End:</strong> <%= @movie.showing_end.present? ? @movie.showing_end.strftime('%B %d, %Y %I:%M %p') : '-' %></p>
     </div>
+
+    <% if user_signed_in? %>
+      <% if @movie.user_id == current_user.id %>
+        <div class="text-center">
+          <%= link_to '<i class="bi bi-pencil-fill small-icon"></i>'.html_safe, edit_movie_path(@movie), class: "btn btn-secondary", title: "Edit" %>
+          <%= link_to '<i class="bi bi-trash-fill small-icon"></i>'.html_safe, movie_path(@movie), class: "btn btn-danger", data: { bs_toggle: "modal", bs_target: "#deleteModal#{@movie.id}" }, title: "Delete" %>
+
+          <!-- Modal -->
+          <div class="modal fade" id="deleteModal<%= @movie.id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Are you sure you want to delete this movie?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <%= button_to '<i class="bi bi-trash-fill small-icon"></i>'.html_safe, movie_path(@movie), method: :delete, class: "btn btn-danger", title: "Delete" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+
     <div class="card-footer text-end">
       <%= link_to 'Back to Movies', movies_path, class: 'btn btn-secondary' %>
     </div>

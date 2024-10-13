@@ -10,7 +10,7 @@
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 </head>
 
-<body>
+<body style="margin: 0; padding: 0;">
 
 <nav class="navbar sticky-top navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
   <div class="container-fluid">
@@ -24,12 +24,17 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li><%= link_to "Sign Up", new_user_registration_path, class: "nav-link #{current_page?(new_user_registration_path) ? 'active' : ''}" %></li>
         <% if user_signed_in? %>
-          <li><%= button_to 'Sign Out', destroy_user_session_path,class: "nav-link", method: :delete %></li>
-      <% else %>
+          <li><%= button_to 'Sign Out', destroy_user_session_path, class: "nav-link", method: :delete %></li>
+        <% else %>
           <li><%= link_to "Sign In", new_user_session_path, class: "nav-link #{current_page?(new_user_session_path) ? 'active' : ''}" %></li>
         <% end %>
       </ul>
 
+      <ul class="d-flex me-3 mb-2 mb-lg-0">
+          <% if user_signed_in? %>
+            <%= link_to "Add Movie", new_movie_path, class: "btn btn-success" %>
+          <% end %>
+      </ul>
       <!-- Search Form -->
       <form class="d-flex me-2 mb-2 mb-lg-0" role="search">
         <div class="input-group">
@@ -43,10 +48,12 @@
   </div>
 </nav>
 
+<div style="margin-top: 0;">
+<%= yield %>
+</div>
+
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
-
-<%= yield %>
 
 </body>
 </html>
