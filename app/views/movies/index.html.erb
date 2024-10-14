@@ -1,13 +1,17 @@
 <div class="container mt-5">
-    <div class="mb-4">
-      <h5>Select Genre:</h5>
-      <%= form_with(url: movies_path, method: :get, local: true) do %>
-        <div class="input-group">
-          <%= select_tag :genre, options_from_collection_for_select(Genre.all.order(:name), :name, :name, params[:genre]), prompt: 'Choose a genre', class: 'form-select' %>
-          <button class="btn btn-primary" type="submit">Filter</button>
-        </div>
-      <% end %>
-    </div>
+  <div class="mb-4">
+    <%= form_with(url: movies_path, method: :get, local: true, class: "d-flex align-items-center") do %>
+      <div class="me-3">
+        <%= select_tag :genre, options_from_collection_for_select(Genre.all.order(:name), :name, :name, params[:genre]), prompt: 'Choose a genre', class: 'form-select' %>
+      </div>
+      <div class="input-group me-2" style="max-width: 200px;"> <!-- Adjust the width here -->
+        <input class="form-control form-control-sm" type="search" name="search" value="<%= params[:search] %>" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success btn-sm" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    <% end %>
+  </div>
 
   <div class="row">
     <% @movies.each_with_index do |movie, index| %>
