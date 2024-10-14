@@ -10,6 +10,8 @@ User.destroy_all
 Genre.destroy_all
 Movie.destroy_all
 
+User.create(email: 'preciousdaniellamapa@gmail.com', password: '123456')
+
 genres = [
   { name: 'Action' },
   { name: 'Comedy' },
@@ -48,8 +50,8 @@ end
 
 puts "Created #{User.count} users."
 
-10.times do
-  Movie.create(
+15.times do
+  movie = Movie.create(
     title: Faker::Movie.title,
     description: Faker::Movie.quote,
     date_released: Faker::Date.between(from: '1900-01-01', to: Date.today),
@@ -58,7 +60,8 @@ puts "Created #{User.count} users."
     showing_end: Faker::Time.forward(days: rand(11..20), period: :evening),
     user: User.all.sample # Assign a random user to each movie
   )
+
+  movie.genres << Genre.order('RAND()').limit(rand(1..3))
 end
 
-movie.genres << Genre.order('RANDOM()').limit(rand(1..3))
 puts "Created #{Movie.count} movies with associated genres."

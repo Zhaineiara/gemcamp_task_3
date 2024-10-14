@@ -1,43 +1,41 @@
-<div class="container-fluid mt-0">
-  <div class="m-5">
-    <table class="table table-bordered table-striped gap-2">
-      <thead class="table-dark">
-      <tr>
-        <th scope="col" class="text-center">#</th>
-        <th scope="col" class="text-center">Title</th>
-        <th scope="col" class="text-center">Description</th>
-        <th scope="col" class="text-center">Genres</th>
-        <th scope="col" class="text-center">Date Released</th>
-        <th scope="col" class="text-center">Country of Origin</th>
-        <th scope="col" class="text-center">Showing Start</th>
-        <th scope="col" class="text-center">Showing End</th>
-        <th scope="col" class="text-center" style="width: 120px;">Actions</th>
-      </tr>
-      </thead>
-
-      <tbody class="table-secondary">
-      <% @movies.each_with_index do |movie, index| %>
-        <tr>
-          <td class="text-center"><%= index + 1 %></td>
-          <td class="text-left"><%= link_to movie.title, movie_path(movie) %></td>
-          <td class="text-left"><%= movie.description %></td>
-          <td class="text-center">
-            <% if movie.genres.any? %>
-              <% movie.genres.each do |genre| %>
-                <span class="badge bg-secondary"><%= genre.name %></span>
+<div class="container mt-5">
+  <div class="row">
+    <% @movies.each_with_index do |movie, index| %>
+      <div class="col-md-3 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <!-- Make the movie title clickable -->
+            <h5 class="card-title text-center">
+              <%= link_to movie.title, movie_path(movie), class: "text-decoration-none" %>
+            </h5>
+            <p class="card-text text-left">
+              <strong>Description:</strong> <%= movie.description %><br>
+              <strong>Genres:</strong>
+              <% if movie.genres.any? %>
+                <% movie.genres.each do |genre| %>
+                  <span class="badge bg-secondary"><%= genre.name %></span>
+                <% end %>
+              <% else %>
+                -
               <% end %>
-            <% else %>
-              -
-            <% end %>
-          </td>
-          <td class="text-center"><%= movie.date_released.strftime('%B %d, %Y') if movie.date_released %></td>
-          <td class="text-center"><%= movie.country_of_origin %></td>
-          <td class="text-center"><%= movie.showing_start.strftime('%B %d, %Y') if movie.showing_start %></td>
-          <td class="text-center"><%= movie.showing_end.strftime('%B %d, %Y') if movie.showing_end %></td>
-          <td class="text-center">
-            <%= link_to '<i class="bi bi-pencil-fill small-icon"></i>'.html_safe, edit_movie_path(movie), class: "btn btn-secondary", title: "Edit" %>
-            <%= link_to '<i class="bi bi-trash-fill small-icon"></i>'.html_safe, movie_path(movie), class: "btn btn-danger", data: { bs_toggle: "modal", bs_target: "#deleteModal#{movie.id}" }, title: "Delete" %>
+            </p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>Date Released:</strong> <%= movie.date_released.strftime('%B %d, %Y') if movie.date_released %>
+              </li>
+              <li class="list-group-item"><strong>Country:</strong> <%= movie.country_of_origin %></li>
+              <li class="list-group-item">
+                <strong>Showing Start:</strong> <%= movie.showing_start.strftime('%B %d, %Y') if movie.showing_start %>
+              </li>
+              <li class="list-group-item">
+                <strong>Showing End:</strong> <%= movie.showing_end.strftime('%B %d, %Y') if movie.showing_end %></li>
+            </ul>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+            <%= link_to '<i class="bi bi-pencil-fill small-icon"></i>'.html_safe, edit_movie_path(movie), class: "btn btn-secondary btn-sm", title: "Edit" %>
+            <%= link_to '<i class="bi bi-trash-fill small-icon"></i>'.html_safe, movie_path(movie), class: "btn btn-danger btn-sm", data: { bs_toggle: "modal", bs_target: "#deleteModal#{movie.id}" }, title: "Delete" %>
 
+            <!-- Modal for deletion confirmation -->
             <div class="modal fade" id="deleteModal<%= movie.id %>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -55,10 +53,15 @@
                 </div>
               </div>
             </div>
-          </td>
-        </tr>
+          </div>
+        </div>
+      </div>
+
+      <% if (index + 1) % 4 == 0 %>
+        </div>
+        <div class="row">
       <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+
+    <% end %>
+    </div>
+    </div>
