@@ -10,7 +10,7 @@ User.destroy_all
 Genre.destroy_all
 Movie.destroy_all
 
-User.create(email: 'preciousdaniellamapa@gmail.com', password: '123456')
+User.create(email: 'preciousdaniellamapa@gmail.com', password: '123456', username: 'dan', first_name:'Precious', last_name: 'Mapa')
 
 genres = [
   { name: 'Action' },
@@ -43,8 +43,11 @@ end
 #
 10.times do
   User.create(
-    email: Faker::Internet.email,
-    password: Faker::Internet.password(min_length: 8)
+    email: Faker::Internet.unique.email,  # Ensure unique emails
+    password: Faker::Internet.password(min_length: 8),
+    username: Faker::Internet.username(specifier: 5..15),  # Generate a username
+    first_name: Faker::Name.first_name,   # Generate a first name
+    last_name: Faker::Name.last_name       # Generate a last name
   )
 end
 

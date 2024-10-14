@@ -12,7 +12,7 @@
               <strong>Description:</strong> <%= movie.description %><br>
               <strong>Genres:</strong>
               <% if movie.genres.any? %>
-                <% movie.genres.each do |genre| %>
+                <% movie.genres.sort_by(&:name).each do |genre| %>
                   <span class="badge bg-secondary"><%= genre.name %></span>
                 <% end %>
               <% else %>
@@ -40,5 +40,5 @@
       <% end %>
 
     <% end %>
-    </div>
-    </div>
+  </div>
+</div>
