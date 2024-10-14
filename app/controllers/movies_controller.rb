@@ -2,7 +2,11 @@ class MoviesController < ApplicationController
   before_action :find_movie, only: [:show, :edit, :update, :destroy]
 
   def index
-    @movies = Movie.all.order('title ASC')
+    if params[:genre].present?
+      @movies = Movie.joins(:genres).where(genres: { name: params[:genre] }).order('movies.title ASC')
+    else
+      @movies = Movie.all.order('title ASC') # Order all movies alphabetically
+    end
   end
 
   def new
