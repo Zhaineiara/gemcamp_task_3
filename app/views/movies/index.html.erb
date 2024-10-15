@@ -24,7 +24,6 @@
             </h5>
             <p class="card-text text-left">
               <strong>Description:</strong> <%= movie.description %><br>
-              <strong>Genres:</strong>
               <% if movie.genres.any? %>
                 <% movie.genres.sort_by(&:name).each do |genre| %>
                   <span class="badge bg-secondary"><%= genre.name %></span>

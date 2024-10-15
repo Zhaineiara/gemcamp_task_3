@@ -22,6 +22,7 @@
 
     <div class="card-footer d-flex justify-content-between align-items-center">
       <% if user_signed_in? %>
+        <%= link_to "Add Review", new_movie_review_path(@movie), class: "btn btn-primary" %>
         <% if @movie.user_id == current_user.id %>
           <div class="text-center">
             <%= link_to '<i class="bi bi-pencil-fill small-icon"></i>'.html_safe, edit_movie_path(@movie), class: "btn btn-secondary", title: "Edit" %>
@@ -50,6 +51,35 @@
       <% end %>
 
       <%= link_to 'Back to Movies', movies_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h3 class="text-center mb-4">Reviews</h3>
+
+      <% if @movie.reviews.any? %>
+        <% @movie.reviews.each do |review| %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h5 class="card-title mb-0">Rating: <%= review.rating %> / 5</h5>
+                </div>
+                <small class="text-muted">
+                  Reviewed by <%= "#{review.user.first_name} #{review.user.last_name}" %> on <%= review.created_at.strftime('%B %d, %Y') %>
+
+                </small>
+              </div>
+              <p class="card-text mt-2"><%= review.comment %></p>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-center">There are no reviews for this movie yet.</p>
+      <% end %>
     </div>
   </div>
 </div>

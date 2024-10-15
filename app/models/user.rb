@@ -5,7 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :username, presence: true, uniqueness: true
+
   has_many :movies
+  has_many :reviews
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
