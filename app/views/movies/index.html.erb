@@ -67,9 +67,16 @@
             </li>
           <% end %>
 
-          <% @movies.total_pages.times do |i| %>
-            <li class="page-item <%= 'active' if @movies.current_page == i + 1 %>">
-              <%= link_to (i + 1), movies_path(page: i + 1, genre: params[:genre], search: params[:search]), class: 'page-link' %>
+          <% start_page = [1, @movies.current_page - 2].max %>
+          <% end_page = [start_page + 4, @movies.total_pages].min %>
+
+          <% if end_page - start_page < 4 %>
+            <% start_page = [1, end_page - 4].max %>
+          <% end %>
+
+          <% (start_page..end_page).each do |i| %>
+            <li class="page-item <%= 'active' if @movies.current_page == i %>">
+              <%= link_to i, movies_path(page: i, genre: params[:genre], search: params[:search]), class: 'page-link' %>
             </li>
           <% end %>
 
@@ -87,4 +94,4 @@
     </div>
 
     </div>
-</div>
+    </div>
