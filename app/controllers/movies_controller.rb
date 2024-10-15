@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
       @movies = @movies.where("title LIKE :query OR description LIKE :query", query: "%#{params[:search]}%")
     end
 
-    @movies = @movies.order('title ASC').page(params[:page]).per(8)
+    @movies = @movies.order('title ASC').page(params[:page]).per(4)
   end
 
   def new

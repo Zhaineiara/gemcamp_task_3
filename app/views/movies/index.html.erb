@@ -53,9 +53,38 @@
         <div class="row">
       <% end %>
     <% end %>
-  </div>
 
     <div class="d-flex justify-content-center mt-4">
-      <%= paginate @movies%>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <% if @movies.prev_page %>
+            <li class="page-item">
+              <%= link_to 'Previous', movies_path(page: @movies.prev_page, genre: params[:genre], search: params[:search]), class: 'page-link' %>
+            </li>
+          <% else %>
+            <li class="page-item disabled">
+              <a class="page-link">Previous</a>
+            </li>
+          <% end %>
+
+          <% @movies.total_pages.times do |i| %>
+            <li class="page-item <%= 'active' if @movies.current_page == i + 1 %>">
+              <%= link_to (i + 1), movies_path(page: i + 1, genre: params[:genre], search: params[:search]), class: 'page-link' %>
+            </li>
+          <% end %>
+
+          <% if @movies.next_page %>
+            <li class="page-item">
+              <%= link_to 'Next', movies_path(page: @movies.next_page, genre: params[:genre], search: params[:search]), class: 'page-link' %>
+            </li>
+          <% else %>
+            <li class="page-item disabled">
+              <a class="page-link">Next</a>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+
     </div>
 </div>
