@@ -2,7 +2,7 @@ class MoviesController < ApplicationController
   before_action :find_movie, only: [:show, :edit, :update, :destroy]
 
   def index
-    @movies = Movie.all.order('title ASC') # Default to all movies sorted by title
+    @movies = Movie.all.order('title ASC')
 
     if params[:genre].present?
       @movies = @movies.joins(:genres).where(genres: { name: params[:genre] })
@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
       @movies = @movies.where("title LIKE :query OR description LIKE :query", query: "%#{params[:search]}%")
     end
 
-    @movies = @movies.order('title ASC')
+    @movies = @movies.order('title ASC').page(params[:page]).per(8)
   end
 
   def new
@@ -31,7 +31,10 @@ class MoviesController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @movie = Movie.find(params[:id])
+    @current_page = params[:page]
+  end
 
   def edit; end
 

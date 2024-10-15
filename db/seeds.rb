@@ -53,7 +53,7 @@ end
 
 puts "Created #{User.count} users."
 
-15.times do
+100.times do
   movie = Movie.create(
     title: Faker::Movie.title,
     description: Faker::Movie.quote,
