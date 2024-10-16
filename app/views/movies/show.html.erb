@@ -9,11 +9,18 @@
         <div class="card-body">
           <p class="card-text"><strong>Title:</strong> <%= @movie.title || '-' %></p>
           <p class="card-text"><strong>Description:</strong> <%= @movie.description || '-' %></p>
-          <p class="card-text"><strong>Date Released:</strong> <%= @movie.date_released.present? ? @movie.date_released.strftime('%B %d, %Y') : '-' %></p>
+          <p class="card-text"><strong>Date
+            Released:</strong> <%= @movie.date_released.present? ? @movie.date_released.strftime('%B %d, %Y') : '-' %>
+          </p>
           <p class="card-text"><strong>Country of Origin:</strong> <%= @movie.country_of_origin || '-' %></p>
-          <p class="card-text"><strong>Showing Start:</strong> <%= @movie.showing_start.present? ? @movie.showing_start.strftime('%B %d, %Y %I:%M %p') : '-' %></p>
-          <p class="card-text"><strong>Showing End:</strong> <%= @movie.showing_end.present? ? @movie.showing_end.strftime('%B %d, %Y %I:%M %p') : '-' %></p>
-          <p class="card-text"><strong>Genres:</strong> <%= @movie.genres.any? ? @movie.genres.map(&:name).join(', ') : '-' %></p>
+          <p class="card-text"><strong>Showing
+            Start:</strong> <%= @movie.showing_start.present? ? @movie.showing_start.strftime('%B %d, %Y %I:%M %p') : '-' %>
+          </p>
+          <p class="card-text"><strong>Showing
+            End:</strong> <%= @movie.showing_end.present? ? @movie.showing_end.strftime('%B %d, %Y %I:%M %p') : '-' %>
+          </p>
+          <p class="card-text">
+            <strong>Genres:</strong> <%= @movie.genres.any? ? @movie.genres.map(&:name).join(', ') : '-' %></p>
         </div>
 
         <div class="card-footer d-flex justify-content-between align-items-center">
@@ -51,37 +58,48 @@
       </div>
     </div>
 
-    <!-- Right Column: Reviews -->
-    <div class="col-md-6 mt-4 mt-md-0">
-      <h3 class="text-center mb-4">Reviews</h3>
+    <div class="p-5 text-primary-emphasis bg-primary-subtle w-50 card shadow-sm border-light">
+      <!-- Right Column: Reviews -->
+      <div class="col-md-10 mt-4 mt-md-0 mx-auto">
+        <h3 class="text-center mb-4">Reviews</h3>
 
-      <div class="text-center mb-3">
-        <h5 class="d-inline">
-          Average Rating:
-          <%= @movie.reviews.any? ? @movie.reviews.average(:rating)&.round(1) : 'N/A' %> / 5
-        </h5>
-        <span class="badge bg-secondary ms-2"><%= @movie.reviews.count %> Comments</span>
-      </div>
+        <div class="text-center mb-3 ">
+          <h5 class="d-inline">
+            Average Rating:
+            <%= @movie.reviews.any? ? @movie.reviews.average(:rating)&.round(1) : 'N/A' %> / 5
+          </h5>
+          <span class="badge bg-secondary ms-2"><%= @movie.reviews.count %> Comments</span>
+        </div>
 
-      <% if @movie.reviews.any? %>
-        <% @movie.reviews.order(rating: :desc).each do |review| %>
-          <div class="card mb-2 shadow-sm border-light" style="max-width: 400px; margin: auto;">
-            <div class="card-body p-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <h5 class="card-title mb-0">Rating: <%= review.rating %> / 5</h5>
+        <div style="max-height: 400px; overflow-y: auto;">
+          <% if @movie.reviews.any? %>
+            <% @movie.reviews.order(rating: :desc).each do |review| %>
+              <div class="card mb-2 shadow-sm border-light" style="max-width: 400px; margin: auto;">
+                <div class="card-body p-2">
+                  <p class="mb-1">
+                    <strong><%= "#{review.user.first_name} #{review.user.last_name}" %></strong>
+                  </p>
+
+                  <p class="mb-1">
+                    <strong>Rating:</strong> <%= review.rating %> / 5
+                  </p>
+
+                  <p class="mb-1 text-muted">
+                    <small>Reviewed on <%= review.created_at.strftime('%B %d, %Y') %></small>
+                  </p>
+
+                  <p class="card-text mt-2" style="font-size: 0.9rem;">
+                    <%= review.comment %>
+                  </p>
                 </div>
-                <small class="text-muted">
-                  Reviewed by <%= "#{review.user.first_name} #{review.user.last_name}" %> on <%= review.created_at.strftime('%B %d, %Y') %>
-                </small>
               </div>
-              <p class="card-text mt-1" style="font-size: 0.9rem;"><%= review.comment %></p>
-            </div>
-          </div>
-        <% end %>
-      <% else %>
-        <p class="text-center">There are no reviews for this movie yet.</p>
-      <% end %>
+
+            <% end %>
+          <% else %>
+            <p class="text-center">There are no reviews for this movie yet.</p>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
