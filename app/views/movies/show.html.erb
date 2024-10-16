@@ -69,8 +69,30 @@
           <div class="text-center mb-3 ">
             <h5 class="d-inline">
               Average Rating:
-              <%= @movie.reviews.any? ? @movie.reviews.average(:rating)&.round(1) : 'N/A' %> / 5
+              <% if @movie.reviews.any? %>
+                <% average_rating = @movie.reviews.average(:rating).round(1) %>
+                <% full_stars = average_rating.floor %>
+                <% half_star = average_rating - full_stars >= 0.5 ? 1 : 0 %>
+                <% empty_stars = 5 - full_stars - half_star %>
+
+                <% full_stars.times do %>
+                  <i class="bi bi-star-fill text-warning"></i>
+                <% end %>
+
+                <% half_star.times do %>
+                  <i class="bi bi-star-half text-warning"></i>
+                <% end %>
+
+                <% empty_stars.times do %>
+                  <i class="bi bi-star text-warning"></i>
+                <% end %>
+
+                <span class="ms-2"><%= average_rating %> / 5</span>
+              <% else %>
+                N/A
+              <% end %>
             </h5>
+
             <span class="badge bg-secondary ms-2"><%= @movie.reviews.count %> Comments</span>
           </div>
 
@@ -84,7 +106,28 @@
                     </p>
 
                     <p class="mb-1">
-                      <strong>Rating:</strong> <%= review.rating %> / 5
+                      <strong>Rating:</strong>
+                      <% if review.rating.present? %>
+                        <% full_stars = review.rating.floor %>
+                        <% half_star = review.rating - full_stars >= 0.5 ? 1 : 0 %>
+                        <% empty_stars = 5 - full_stars - half_star %>
+
+                        <% full_stars.times do %>
+                          <i class="bi bi-star-fill text-warning"></i>
+                        <% end %>
+
+                        <% half_star.times do %>
+                          <i class="bi bi-star-half text-warning"></i>
+                        <% end %>
+
+                        <% empty_stars.times do %>
+                          <i class="bi bi-star text-warning"></i>
+                        <% end %>
+
+                        <span class="ms-2"><%= review.rating %> / 5</span>
+                      <% else %>
+                        <span class="text-muted">No rating available</span>
+                      <% end %>
                     </p>
 
                     <p class="mb-1 text-muted">
