@@ -91,6 +91,13 @@
                   <p class="card-text mt-2" style="font-size: 0.9rem;">
                     <%= review.comment %>
                   </p>
+
+                  <% if user_signed_in? && review.user_id == current_user.id %>
+                      <p class="card-text mt-2 position-absolute bottom-0 end-0">
+                        <%= link_to '<i class="bi bi-pencil-fill"></i>'.html_safe, edit_movie_path(@movie), class: "btn btn-secondary", title: "Edit" %>
+                        <%= link_to '<i class="bi bi-trash-fill"></i>'.html_safe, movie_path(@movie), class: "btn btn-danger", data: { bs_toggle: "modal", bs_target: "#deleteModal#{@movie.id}" }, title: "Delete" %>
+                      </p>
+                  <% end %>
                 </div>
               </div>
 
