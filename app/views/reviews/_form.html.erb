@@ -1,10 +1,10 @@
 <div class="container d-flex justify-content-center mt-4">
   <div class="card shadow-sm" style="max-width: 400px; width: 100%;">
     <div class="card-header bg-dark text-white text-center">
-      <h5 class="mb-0">Add Review</h5>
+      <h5 class="mb-0"><%= @review.new_record? ? 'Add Review' : 'Edit Review' %></h5>
     </div>
     <div class="card-body">
-      <%= form_with model: [@movie, @movie.reviews.build], local: true do |form| %>
+      <%= form_with model: [@movie, @review], local: true do |form| %>
         <div class="mb-2">
           <%= form.label :rating, 'Rating', class: 'form-label small' %>
           <%= form.number_field :rating, class: 'form-control form-control-sm', min: 1, max: 5 %>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="text-center">
-          <%= form.submit 'Submit Review', class: 'btn btn-success btn-sm' %>
+          <%= form.submit @review.new_record? ? 'Submit Review' : 'Update Review', class: 'btn btn-success btn-sm' %>
         </div>
       <% end %>
     </div>

@@ -58,53 +58,57 @@
       </div>
     </div>
 
-    <div class="p-5 text-primary-emphasis bg-primary-subtle w-50 card shadow-sm border-light">
-      <!-- Right Column: Reviews -->
-      <div class="col-md-10 mt-4 mt-md-0 mx-auto">
-        <h3 class="text-center mb-4">Reviews</h3>
 
-        <div class="text-center mb-3 ">
-          <h5 class="d-inline">
-            Average Rating:
-            <%= @movie.reviews.any? ? @movie.reviews.average(:rating)&.round(1) : 'N/A' %> / 5
-          </h5>
-          <span class="badge bg-secondary ms-2"><%= @movie.reviews.count %> Comments</span>
+
+    <!-- Right Column: Review -->
+    <div class="text-primary-emphasis w-50 card shadow-sm border-light" style="background-color: #f8f9fa; padding: 0px 0px">
+        <div class="card-header bg-primary text-white text-center">
+          <h2 class="mb-0">Reviews</h2>
         </div>
+        <div class="card-body">
+          <div class="text-center mb-3 ">
+            <h5 class="d-inline">
+              Average Rating:
+              <%= @movie.reviews.any? ? @movie.reviews.average(:rating)&.round(1) : 'N/A' %> / 5
+            </h5>
+            <span class="badge bg-secondary ms-2"><%= @movie.reviews.count %> Comments</span>
+          </div>
 
-        <div style="max-height: 400px; overflow-y: auto;">
-          <% if @movie.reviews.any? %>
-            <% @movie.reviews.order(rating: :desc).each do |review| %>
-              <div class="card mb-2 shadow-sm border-light" style="max-width: 400px; margin: auto;">
-                <div class="card-body p-2">
-                  <p class="mb-1">
-                    <strong><%= "#{review.user.first_name} #{review.user.last_name}" %></strong>
-                  </p>
+          <div style="max-height: 400px; overflow-y: auto;">
+            <% if @movie.reviews.any? %>
+              <% @movie.reviews.order(rating: :desc, created_at: :desc).each do |review| %>
+                <div class="card mb-2 shadow-sm border-light" style="max-width: 400px; margin: auto;">
+                  <div class="card-body p-2">
+                    <p class="mb-1">
+                      <strong><%= "#{review.user.first_name} #{review.user.last_name}" %></strong>
+                    </p>
 
-                  <p class="mb-1">
-                    <strong>Rating:</strong> <%= review.rating %> / 5
-                  </p>
+                    <p class="mb-1">
+                      <strong>Rating:</strong> <%= review.rating %> / 5
+                    </p>
 
-                  <p class="mb-1 text-muted">
-                    <small>Reviewed on <%= review.created_at.strftime('%B %d, %Y') %></small>
-                  </p>
+                    <p class="mb-1 text-muted">
+                      <small>Reviewed on <%= review.created_at.strftime('%B %d, %Y') %></small>
+                    </p>
 
-                  <p class="card-text mt-2" style="font-size: 0.9rem;">
-                    <%= review.comment %>
-                  </p>
+                    <p class="card-text mt-2" style="font-size: 0.9rem;">
+                      <%= review.comment %>
+                    </p>
 
-                  <% if user_signed_in? && review.user_id == current_user.id %>
+                    <% if user_signed_in? && review.user_id == current_user.id %>
                       <p class="card-text mt-2 position-absolute bottom-0 end-0">
-                        <%= link_to '<i class="bi bi-pencil-fill"></i>'.html_safe, edit_movie_path(@movie), class: "btn btn-secondary", title: "Edit" %>
-                        <%= link_to '<i class="bi bi-trash-fill"></i>'.html_safe, movie_path(@movie), class: "btn btn-danger", data: { bs_toggle: "modal", bs_target: "#deleteModal#{@movie.id}" }, title: "Delete" %>
+                        <%= link_to '<i class="bi bi-pencil-fill"></i>'.html_safe, edit_movie_review_path(@movie, review), class: "btn btn-secondary", title: "Edit" %>
+                        <%= link_to '<i class="bi bi-trash-fill"></i>'.html_safe, movie_review_path(@movie, review), class: "btn btn-danger", data: { bs_toggle: "modal", bs_target: "#deleteModal#{review.id}" }, title: "Delete" %>
                       </p>
-                  <% end %>
+                    <% end %>
+                  </div>
                 </div>
-              </div>
 
+              <% end %>
+            <% else %>
+              <p class="text-center">There are no reviews for this movie yet.</p>
             <% end %>
-          <% else %>
-            <p class="text-center">There are no reviews for this movie yet.</p>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
