@@ -59,101 +59,120 @@
     </div>
 
 
-
     <!-- Right Column: Review -->
     <div class="text-primary-emphasis w-50 card shadow-sm border-light" style="background-color: #f8f9fa; padding: 0px 0px">
-        <div class="card-header bg-primary text-white text-center">
-          <h2 class="mb-0">Reviews</h2>
-        </div>
-        <div class="card-body">
-          <div class="text-center mb-3 ">
-            <h5 class="d-inline">
-              Average Rating:
-              <% if @movie.reviews.any? %>
-                <% average_rating = @movie.reviews.average(:rating).round(1) %>
-                <% full_stars = average_rating.floor %>
-                <% half_star = average_rating - full_stars >= 0.5 ? 1 : 0 %>
-                <% empty_stars = 5 - full_stars - half_star %>
-
-                <% full_stars.times do %>
-                  <i class="bi bi-star-fill text-warning"></i>
-                <% end %>
-
-                <% half_star.times do %>
-                  <i class="bi bi-star-half text-warning"></i>
-                <% end %>
-
-                <% empty_stars.times do %>
-                  <i class="bi bi-star text-warning"></i>
-                <% end %>
-
-                <span class="ms-2"><%= average_rating %> / 5</span>
-              <% else %>
-                N/A
-              <% end %>
-            </h5>
-
-            <span class="badge bg-secondary ms-2"><%= @movie.reviews.count %> Comments</span>
-          </div>
-
-          <div style="max-height: 400px; overflow-y: auto;">
+      <div class="card-header bg-primary text-white text-center">
+        <h2 class="mb-0">Reviews</h2>
+      </div>
+      <div class="card-body">
+        <div class="text-center mb-3 ">
+          <h5 class="d-inline">
+            Average Rating:
             <% if @movie.reviews.any? %>
-              <% @movie.reviews.order(rating: :desc, created_at: :desc).each do |review| %>
-                <div class="card mb-2 shadow-sm border-light" style="max-width: 400px; margin: auto;">
-                  <div class="card-body p-2">
-                    <p class="mb-1">
-                      <strong><%= "#{review.user.first_name} #{review.user.last_name}" %></strong>
-                    </p>
+              <% average_rating = @movie.reviews.average(:rating).round(1) %>
+              <% full_stars = average_rating.floor %>
+              <% half_star = average_rating - full_stars >= 0.5 ? 1 : 0 %>
+              <% empty_stars = 5 - full_stars - half_star %>
 
-                    <p class="mb-1">
-                      <strong>Rating:</strong>
-                      <% if review.rating.present? %>
-                        <% full_stars = review.rating.floor %>
-                        <% half_star = review.rating - full_stars >= 0.5 ? 1 : 0 %>
-                        <% empty_stars = 5 - full_stars - half_star %>
-
-                        <% full_stars.times do %>
-                          <i class="bi bi-star-fill text-warning"></i>
-                        <% end %>
-
-                        <% half_star.times do %>
-                          <i class="bi bi-star-half text-warning"></i>
-                        <% end %>
-
-                        <% empty_stars.times do %>
-                          <i class="bi bi-star text-warning"></i>
-                        <% end %>
-
-                        <span class="ms-2"><%= review.rating %> / 5</span>
-                      <% else %>
-                        <span class="text-muted">No rating available</span>
-                      <% end %>
-                    </p>
-
-                    <p class="mb-1 text-muted">
-                      <small>Reviewed on <%= review.created_at.strftime('%B %d, %Y') %></small>
-                    </p>
-
-                    <p class="card-text mt-2" style="font-size: 0.9rem;">
-                      <%= review.comment %>
-                    </p>
-
-                    <% if user_signed_in? && review.user_id == current_user.id %>
-                      <p class="card-text mt-2 position-absolute bottom-0 end-0">
-                        <%= link_to '<i class="bi bi-pencil-fill"></i>'.html_safe, edit_movie_review_path(@movie, review), class: "btn btn-secondary", title: "Edit" %>
-                        <%= link_to '<i class="bi bi-trash-fill"></i>'.html_safe, movie_review_path(@movie, review), class: "btn btn-danger", data: { bs_toggle: "modal", bs_target: "#deleteModal#{review.id}" }, title: "Delete" %>
-                      </p>
-                    <% end %>
-                  </div>
-                </div>
-
+              <% full_stars.times do %>
+                <i class="bi bi-star-fill text-warning"></i>
               <% end %>
+
+              <% half_star.times do %>
+                <i class="bi bi-star-half text-warning"></i>
+              <% end %>
+
+              <% empty_stars.times do %>
+                <i class="bi bi-star text-warning"></i>
+              <% end %>
+
+              <span class="ms-2"><%= average_rating %> / 5</span>
             <% else %>
-              <p class="text-center">There are no reviews for this movie yet.</p>
+              N/A
             <% end %>
-          </div>
+          </h5>
+
+          <span class="badge bg-secondary ms-2"><%= @movie.reviews.count %> Comments</span>
+        </div>
+
+        <div style="max-height: 400px; overflow-y: auto;">
+          <% if @movie.reviews.any? %>
+            <% @movie.reviews.order(rating: :desc, created_at: :desc).each do |review| %>
+              <div class="card mb-2 shadow-sm border-light" style="max-width: 400px; margin: auto;">
+                <div class="card-body p-2">
+                  <p class="mb-1">
+                    <strong><%= "#{review.user.first_name} #{review.user.last_name}" %></strong>
+                  </p>
+
+                  <p class="mb-1">
+                    <strong>Rating:</strong>
+                    <% if review.rating.present? %>
+                      <% full_stars = review.rating.floor %>
+                      <% half_star = review.rating - full_stars >= 0.5 ? 1 : 0 %>
+                      <% empty_stars = 5 - full_stars - half_star %>
+
+                      <% full_stars.times do %>
+                        <i class="bi bi-star-fill text-warning"></i>
+                      <% end %>
+
+                      <% half_star.times do %>
+                        <i class="bi bi-star-half text-warning"></i>
+                      <% end %>
+
+                      <% empty_stars.times do %>
+                        <i class="bi bi-star text-warning"></i>
+                      <% end %>
+
+                      <span class="ms-2"><%= review.rating %> / 5</span>
+                    <% else %>
+                      <span class="text-muted">No rating available</span>
+                    <% end %>
+                  </p>
+
+                  <p class="mb-1 text-muted">
+                    <small>Reviewed on <%= review.created_at.strftime('%B %d, %Y') %></small>
+                  </p>
+
+                  <p class="card-text mt-2" style="font-size: 0.9rem;">
+                    <%= review.comment %>
+                  </p>
+
+                  <% if user_signed_in? && review.user_id == current_user.id %>
+                    <div class="d-flex justify-content-end">
+                      <%= link_to '<i class="bi bi-pencil-fill"></i>'.html_safe, edit_movie_review_path(@movie, review), class: "btn btn-secondary me-2", title: "Edit" %>
+                      <%= link_to '<i class="bi bi-trash-fill"></i>'.html_safe, '#', class: "btn btn-danger", data: { bs_toggle: "modal", bs_target: "#deleteModal#{review.id}" }, title: "Delete" %>
+                    </div>
+
+                    <div class="modal fade" id="deleteModal<%= review.id %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= review.id %>" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel<%= review.id %>">Confirm Deletion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Are you sure you want to delete this review?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <!-- Delete the Review -->
+                            <%= button_to '<i class="bi bi-trash-fill"></i>'.html_safe, movie_review_path(@movie, review), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?", turbo: false } %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  <% end %>
+                </div>
+              </div>
+
+            <% end %>
+          <% else %>
+            <p class="text-center">There are no reviews for this movie yet.</p>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
