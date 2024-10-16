@@ -8,11 +8,17 @@
         <div class="mb-2">
           <%= form.label :rating, 'Rating', class: 'form-label small' %>
           <%= form.number_field :rating, class: 'form-control form-control-sm', min: 1, max: 5 %>
+          <% if @review.errors[:rating].any? %>
+            <div class="text-danger small"><%= @review.errors[:rating].first %></div>
+          <% end %>
         </div>
 
         <div class="mb-2">
           <%= form.label :comment, 'Comment', class: 'form-label small' %>
           <%= form.text_area :comment, class: 'form-control form-control-sm', rows: 3 %>
+          <% if @review.errors[:comment].any? %>
+            <div class="text-danger small"><%= @review.errors[:comment].first %></div>
+          <% end %>
         </div>
 
         <div class="text-center">
