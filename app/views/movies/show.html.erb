@@ -55,10 +55,18 @@
     <div class="col-md-6 mt-4 mt-md-0">
       <h3 class="text-center mb-4">Reviews</h3>
 
+      <div class="text-center mb-3">
+        <h5 class="d-inline">
+          Average Rating:
+          <%= @movie.reviews.any? ? @movie.reviews.average(:rating)&.round(1) : 'N/A' %> / 5
+        </h5>
+        <span class="badge bg-secondary ms-2"><%= @movie.reviews.count %> Comments</span>
+      </div>
+
       <% if @movie.reviews.any? %>
-        <% @movie.reviews.each do |review| %>
-          <div class="card mb-3 shadow-sm border-light">
-            <div class="card-body">
+        <% @movie.reviews.order(rating: :desc).each do |review| %>
+          <div class="card mb-2 shadow-sm border-light" style="max-width: 400px; margin: auto;">
+            <div class="card-body p-2">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <h5 class="card-title mb-0">Rating: <%= review.rating %> / 5</h5>
@@ -67,7 +75,7 @@
                   Reviewed by <%= "#{review.user.first_name} #{review.user.last_name}" %> on <%= review.created_at.strftime('%B %d, %Y') %>
                 </small>
               </div>
-              <p class="card-text mt-2"><%= review.comment %></p>
+              <p class="card-text mt-1" style="font-size: 0.9rem;"><%= review.comment %></p>
             </div>
           </div>
         <% end %>
