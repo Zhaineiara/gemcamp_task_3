@@ -13,6 +13,7 @@ class MoviesController < ApplicationController
     end
 
     @movies = @movies.order('title ASC').page(params[:page]).per(4)
+    session.delete(:last_movies_page) if params[:page].blank?
   end
 
   def new
@@ -34,6 +35,7 @@ class MoviesController < ApplicationController
   def show
     @movie = Movie.find(params[:id])
     @current_page = params[:page]
+    session[:last_movies_page] = params[:page].present? ? params[:page].to_i : 1
   end
 
   def edit; end

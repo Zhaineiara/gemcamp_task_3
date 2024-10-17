@@ -53,7 +53,7 @@
             <% end %>
           <% end %>
 
-          <%= link_to 'Back to Movies', movies_path, class: 'btn btn-secondary' %>
+          <%= link_to 'Back to Movies', movies_path(page: session[:last_movies_page], genre: params[:genre], search: params[:search]), class: 'btn btn-secondary' %>
         </div>
       </div>
     </div>
