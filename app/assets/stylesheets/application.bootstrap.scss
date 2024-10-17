@@ -1,2 +1,8 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+.navbar-custom {
+  --bs-bg-opacity: 1; /* Custom Bootstrap variable for opacity */
+  background-color: rgb(5, 56, 130) !important; /* Your specified blue color */
+  color: white; /* Ensures text is white for contrast */
+}

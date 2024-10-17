@@ -25,9 +25,26 @@ document.addEventListener("DOMContentLoaded", function () {
         link.addEventListener("click", function () {
             const productId = this.dataset.productId;
             const deleteButton = document.querySelector("#deleteModal .btn-danger");
-            deleteButton.onclick = function() {
+            deleteButton.onclick = function () {
                 deleteButton.form.action = "/products/" + productId;
             };
         });
     });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+        const alerts = document.querySelectorAll('.alert, .notice');
+        alerts.forEach(alert => {
+            alert.classList.add('fade-out'); // Add the fade-out class
+        });
+    }, 5000); // Wait 5 seconds before fading
+
+    // Optionally, remove the alert from the DOM after fading
+    setTimeout(function () {
+        const alerts = document.querySelectorAll('.alert, .notice');
+        alerts.forEach(alert => {
+            alert.style.display = 'none'; // Hide the alert completely
+        });
+    }, 5500); // 5 seconds + fade time
 });

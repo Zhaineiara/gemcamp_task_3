@@ -10,33 +10,17 @@
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
   <style>
-      .dropdown-menu-scrollable {
-          max-height: 200px; /* Height limit for scrollable area */
-          overflow-y: auto; /* Enables vertical scrolling */
-          overflow-x: hidden; /* Prevents horizontal scrolling */
-          padding: 0; /* Removes padding for a compact look */
-          border: 1px solid #ced4da; /* Adds a light border */
-          border-radius: 0.25rem; /* Rounded corners */
-          background-color: #fff; /* Background color */
-          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Shadow for better separation */
-      }
-
-      .dropdown-item {
-          padding: 0.5rem 1rem; /* Increases clickable area */
-          color: #007bff; /* Default text color */
-          text-decoration: none; /* Remove underline from links */
-      }
-
-      .dropdown-item:hover {
-          background-color: #f8f9fa; /* Light background on hover */
-          color: #0056b3; /* Darker text color on hover */
+      .navbar-custom {
+          --bs-bg-opacity: 1; /* Custom Bootstrap variable for opacity */
+          background-color: rgb(42, 65, 101) !important; /* Your specified blue color */
+          color: white; /* Ensures text is white for contrast */
       }
   </style>
 </head>
 
 <body style="margin: 0; padding: 0;">
 
-<nav class="navbar sticky-top navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+<nav class="navbar sticky-top navbar-expand-lg navbar-custom border-bottom border-body" data-bs-theme="dark">
   <div class="container-fluid">
     <%= link_to "MOVIE REVIEW", root_path, class: "navbar-brand" %>
 
@@ -49,7 +33,7 @@
         <% if user_signed_in? %>
           <li><%= button_to 'Sign Out', destroy_user_session_path, class: "nav-link", method: :delete %></li>
         <% else %>
-          <li><%= link_to "Sign Up", new_user_registration_path, class: "nav-link #{current_page?(new_user_registration_path) ? 'active' : ''}" %></li>
+          <li><%= link_to "Sign Up", new_user_registration_path, class: "nav-link me-2 #{current_page?(new_user_registration_path) ? 'active' : ''}" %></li>
           <li><%= link_to "Sign In", new_user_session_path, class: "nav-link #{current_page?(new_user_session_path) ? 'active' : ''}" %></li>
         <% end %>
       </ul>
