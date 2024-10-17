@@ -55,7 +55,7 @@ class MoviesController < ApplicationController
   def destroy
     @movie.destroy
     flash[:success] = 'Movie destroyed successfully'
-    redirect_to movies_path(@movie)
+    redirect_to movies_path(@movie, page: session[:last_movies_page], genre: session[:last_movies_genre], search: session[:last_movies_search])
   end
 
   private
