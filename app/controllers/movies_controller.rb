@@ -44,8 +44,9 @@ class MoviesController < ApplicationController
 
   def update
     if @movie.update(movie_params)
+      puts params[:movie]
       flash[:success] = 'Movie updated successfully'
-      redirect_to movie_path(@movie, page: session[:last_movies_page], genre: session[:last_movies_genre], search: session[:last_movies_search])
+      redirect_to movie_path(@movie.slug)
     else
       flash.now[:error] = 'There were errors with your submission.'
       render :edit, status: :unprocessable_entity
@@ -55,13 +56,13 @@ class MoviesController < ApplicationController
   def destroy
     @movie.destroy
     flash[:success] = 'Movie destroyed successfully'
-    redirect_to movies_path(@movie, page: session[:last_movies_page], genre: session[:last_movies_genre], search: session[:last_movies_search])
+    redirect_to root_path
   end
 
   private
 
   def find_movie
-    @movie = Movie.find_by(slug: params[:slug])
+    @movie = Movie.find_by(slug: params[:slug]) ||  Movie.find_by(params[:id])
   end
 
   def movie_params
