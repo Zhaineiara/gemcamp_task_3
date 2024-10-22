@@ -20,7 +20,7 @@
           <div class="card-body">
             <!-- Make the movie title clickable -->
             <h5 class="card-title text-center">
-              <%= link_to movie.title, movie_path(movie, page: params[:page], genre: params[:genre], search: params[:search]), class: "text-decoration-none" %>
+              <%= link_to movie.title, movie_path(movie.slug), class: "text-decoration-none" %>
             </h5>
             <p class="card-text text-left">
               <strong>Description:</strong> <%= movie.description %><br>
@@ -94,3 +94,6 @@
 
     </div>
     </div>
+
+
+<!--page: params[:page], genre: params[:genre], search: params[:search]-->

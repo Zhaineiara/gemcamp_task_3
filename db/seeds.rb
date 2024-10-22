@@ -41,7 +41,7 @@ end
 
 # USING FAKER
 #
-10.times do
+3.times do
   User.create(
     email: Faker::Internet.unique.email,  # Ensure unique emails
     password: Faker::Internet.password(min_length: 8),
@@ -54,7 +54,7 @@ end
 puts "Created #{User.count} users."
 
 100.times do
-  movie = Movie.create(
+  movie = Movie.new(
     title: Faker::Movie.title,
     description: Faker::Movie.quote,
     date_released: Faker::Date.between(from: '1900-01-01', to: Date.today),
@@ -64,6 +64,8 @@ puts "Created #{User.count} users."
     user: User.all.sample # Assign a random user to each movie
   )
 
+  movie.generate_slug
+  movie.save
   movie.genres << Genre.order('RAND()').limit(rand(1..3))
 end
 

@@ -33,7 +33,7 @@ class MoviesController < ApplicationController
   end
 
   def show
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find_by(slug: params[:slug])
     @current_page = params[:page]
     session[:last_movies_page] = params[:page].present? ? params[:page].to_i : 1
     session[:last_movies_genre] = params[:genre]
@@ -61,7 +61,7 @@ class MoviesController < ApplicationController
   private
 
   def find_movie
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find_by(slug: params[:slug])
   end
 
   def movie_params

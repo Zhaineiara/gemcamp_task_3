@@ -1,4 +1,6 @@
 class Movie < ApplicationRecord
+  before_save :generate_slug
+
   validates :title, presence: true
   validates :description, presence: true
   validates :date_released, presence: true
@@ -9,4 +11,9 @@ class Movie < ApplicationRecord
   belongs_to :user
   has_and_belongs_to_many :genres
   has_many :reviews
+
+  def generate_slug
+    unique_slug = SecureRandom.alphanumeric(7)
+    self.slug = unique_slug
+  end
 end
