@@ -160,7 +160,7 @@
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <!-- Delete the Review -->
-                            <%= button_to '<i class="bi bi-trash-fill"></i>'.html_safe, movie_path(@movie, review), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?", turbo: false } %>
+                            <%= button_to '<i class="bi bi-trash-fill"></i>'.html_safe, movie_review_path(@movie.slug, review.id), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?", turbo: false } %>
                           </div>
                         </div>
                       </div>

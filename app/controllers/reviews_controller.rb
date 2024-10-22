@@ -22,7 +22,7 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      redirect_to movie_path(@movie), notice: 'Review was successfully updated.'
+      redirect_to movie_path(@movie.slug), notice: 'Review was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
-    redirect_to movie_path(@movie), notice: 'Review was successfully deleted.'
+    redirect_to movie_path(@movie.slug), notice: 'Review was successfully deleted.'
   end
 
   private
@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
   end
 
   def find_movie
-    @movie = Movie.find_by(slug: params[:slug]) || Movie.find_by(params[:id])
+    @movie = Movie.find_by(slug: params[:movie_slug   ]) || Movie.find_by(params[:id])
   end
 
   def find_review
