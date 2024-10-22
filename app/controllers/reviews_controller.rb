@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
   end
 
   def find_movie
-    @movie = Movie.find(params[:movie_id])
+    @movie = Movie.find_by(slug: params[:slug]) || Movie.find_by(params[:id])
   end
 
   def find_review
