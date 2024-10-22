@@ -11,7 +11,7 @@ class ReviewsController < ApplicationController
     @review.movie_id = @movie.id
     @review.user_id = current_user.id
     if @review.save
-      redirect_to movie_path(@movie)
+      redirect_to movie_path(@movie.slug)
     else
       render :new, status: :unprocessable_entity
     end
